@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default function App() {
-
   
   const [name, setName] = useState();
   //method to save data
@@ -55,7 +54,7 @@ export default function App() {
     <View style={styles.container}>
 
       <Image
-        source={require("./assets/logo_CA1.png")}
+        source={require("./assets/logo_CA2.png")}
         style={{ width: 200, height: 200, marginTop: 64 }}
         resizeModo="contain"
       />
