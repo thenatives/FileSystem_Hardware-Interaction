@@ -4,20 +4,20 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default function App() {
-  
+
   const [name, setName] = useState();
   //method to save data
   const save = async () => {
     try {
       await AsyncStorage.setItem("Storage_Key", name)
 
-  //alert('Data successfully saved')
+      //alert('Data successfully saved')
     } catch (error) {
       alert('Failed to save the data to the storage');
 
     }
   };
- //method to load data
+  //method to load data
   const load = async () => {
     try {
       let name = await AsyncStorage.getItem("Storage_Key");
@@ -66,6 +66,10 @@ export default function App() {
 
       <TouchableOpacity style={styles.botton} onPress={() => save()}>
         <Text style={{ color: "white" }}>Save your data</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.botton} onPress={() => load()}>
+        <Text style={{ color: "white" }}>Reload</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.botton} onPress={() => remove()}>
