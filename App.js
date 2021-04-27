@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, Image, TextInput, TouchableOpacity, View, } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default function App() {
-
   const [name, setName] = useState();
+
   //method to save data
   const save = async () => {
     try {
-      await AsyncStorage.setItem("Storage_Key", name)
+      await AsyncStorage.setItem("Storage_Key", name);
 
       //alert('Data successfully saved')
     } catch (error) {
-      alert('Failed to save the data to the storage');
-
+      alert("Failed to save the data to the storage");
     }
   };
   //method to load data
@@ -25,20 +30,15 @@ export default function App() {
       if (name !== null) {
         setName(name);
       }
-
     } catch (error) {
-      alert('Failed to load the data from storage');
-
+      alert("Failed to load the data from storage");
     }
-
   };
   //method to remove data
   const remove = async () => {
     try {
-
       await AsyncStorage.removeItem("Storage_Key");
     } catch (error) {
-
     } finally {
       setName("");
     }
@@ -48,11 +48,8 @@ export default function App() {
     load();
   }, []);
 
-
-
   return (
     <View style={styles.container}>
-
       <Image
         source={require("./assets/logo_CA2.png")}
         style={{ width: 200, height: 200, marginTop: 64 }}
@@ -60,7 +57,7 @@ export default function App() {
       />
 
       <Text style={{ height: 30 }}>{name}</Text>
-      <Text > Enter your data here:</Text>
+      <Text> Enter your data here:</Text>
 
       <TextInput style={styles.input} onChangeText={(text) => setName(text)} />
 
@@ -75,9 +72,7 @@ export default function App() {
       <TouchableOpacity style={styles.botton} onPress={() => remove()}>
         <Text style={{ color: "white" }}>Remove your data</Text>
       </TouchableOpacity>
-
-      <Text style={{ color: "white" }}>Test</Text>
-
+      
     </View>
   );
 }
@@ -85,12 +80,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   name: {
-
     fontWeight: "300",
     fontSize: 50,
   },
@@ -108,7 +102,6 @@ const styles = StyleSheet.create({
   },
 
   botton: {
-
     backgroundColor: "#00A0F3",
     alignItems: "center",
     justifyContent: "center",
@@ -118,6 +111,5 @@ const styles = StyleSheet.create({
     marginTop: 32,
     marginHorizontal: 32,
     borderRadius: 6,
-
-  }
+  },
 });
