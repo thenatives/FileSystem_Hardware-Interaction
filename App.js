@@ -36,17 +36,10 @@ export default function App() {
   };
   //method to remove data
   const remove = async () => {
-    try {
-      await AsyncStorage.removeItem("Storage_Key");
-    } catch (error) {
-    } finally {
-      setName("");
-    }
+    await AsyncStorage.removeItem("Storage_Key");
+    setNote('');
   };
 
-  useEffect(() => {
-    load();
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -69,9 +62,11 @@ export default function App() {
         <Text style={{ color: "white" }}>Reload</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.botton} onPress={() => remove()}>
-        <Text style={{ color: "white" }}>Remove your data</Text>
+      <TouchableOpacity style={styles.botton} onPress={remove}>
+          <Text style={{color: "white", fontSize: 18, fontWeight: 'bold',textAlign: 'center'
+          }}>Remove</Text>
       </TouchableOpacity>
+
       
     </View>
   );
