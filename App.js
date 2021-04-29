@@ -1,123 +1,135 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, Image, TextInput, TouchableOpacity, View, } from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet, Text, Image, TextInput, TouchableOpacity, View,
+  TouchableWithoutFeedback, Keyboard, StatusBar
+} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+//npm install @react-native-community/async-storage
+import colors from './assets/Colors';
 
 
 export default function App() {
 
-  const [name, setName] = useState();
+  const [textInput, setText] = useState('');
+  const [note, setNote] = useState('');
+
   //method to save data
   const save = async () => {
-    try {
-      await AsyncStorage.setItem("Storage_Key", name)
-
-      //alert('Data successfully saved')
-    } catch (error) {
-      alert('Failed to save the data to the storage');
-
+    if (textInput) {
+      await AsyncStorage.setItem('Storage_Key', textInput);
+      setText('');
+      alert('Data successfully saved');
+    } else {
+      alert('Failed to save the note, please add some text');
     }
+  }
+
+  //method to retrieve the data
+  const retrieveData = async () => {
+    await AsyncStorage.getItem('Storage_Key').then((note) => {
+      setNote(note);
+    });
   };
-  //method to load data
-  const load = async () => {
-    try {
-      let name = await AsyncStorage.getItem("Storage_Key");
 
-      if (name !== null) {
-        setName(name);
-      }
-
-    } catch (error) {
-      alert('Failed to load the data from storage');
-
-    }
-
-  };
   //method to remove data
   const remove = async () => {
-    try {
-
-      await AsyncStorage.removeItem("Storage_Key");
-    } catch (error) {
-
-    } finally {
-      setName("");
-    }
+    await AsyncStorage.removeItem("Storage_Key");
+    setNote('');
   };
 
-  useEffect(() => {
-    load();
-  }, []);
-
-
+  //method to dismiss the keyboard 
+  const desmissKeyboard = () => {
+    Keyboard.dismiss();
+  };
 
   return (
-    <View style={styles.container}>
+    <>
+      <StatusBar hidden />
+      <View style={styles.container}>
+        <Image
+          source={require("./assets/logo_CA1.png")}
+          style={{ width: 210, height: 210, marginTop: 20 }}
+          resizeModo="contain"
+        />
 
-      <Image
-        source={require("./assets/logo_CA2.png")}
-        style={{ width: 200, height: 200, marginTop: 64 }}
-        resizeModo="contain"
-      />
+        <TextInput multiline underlineColorAndroid='transparent'
+          placeholder='Enter some text here'
+          value={textInput}
+          style={styles.input}
+          onChangeText={(text) => setText(text)} />
 
-      <Text style={{ height: 30 }}>{name}</Text>
-      <Text > Enter your data here:</Text>
+        <TouchableOpacity style={styles.botton} onPress={save}>
 
-      <TextInput style={styles.input} onChangeText={(text) => setName(text)} />
+          <Text style={{
+            color: "white", fontSize: 18, fontWeight: 'bold',
+            textAlign: 'center'
+          }}>Save</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.botton} onPress={() => save()}>
-        <Text style={{ color: "white" }}>Save your data</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.botton} onPress={retrieveData} >
+          <Text style={{
+            color: "white", fontSize: 18, fontWeight: 'bold',
+            textAlign: 'center'
+          }}>Show text</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.botton} onPress={() => load()}>
-        <Text style={{ color: "white" }}>Reload</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.botton} onPress={remove}>
+          <Text style={{
+            color: "white", fontSize: 18, fontWeight: 'bold',
+            textAlign: 'center'
+          }}>Remove</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.botton} onPress={() => remove()}>
-        <Text style={{ color: "white" }}>Remove your data</Text>
-      </TouchableOpacity>
+        <Text style={styles.note}>{note}</Text>
 
-      <Text style={{ color: "white" }}>Test</Text>
-
-    </View>
+        <TouchableWithoutFeedback onPress={desmissKeyboard}>
+          <View style={[styles.desmiss, StyleSheet.absoluteFillObject]} ></View>
+        </TouchableWithoutFeedback>
+      </View>
+    </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  name: {
-
-    fontWeight: "300",
-    fontSize: 50,
-  },
-
   input: {
-    borderWidth: 1,
-    borderColor: "#A0E7E5",
-    alignSelf: "stretch",
-    margin: 24,
-    height: 64,
-    borderRadius: 10,
-    paddingHorizontal: 16,
-    fontSize: 34,
-    fontWeight: "300",
+    borderBottomWidth: 2,
+    borderBottomColor: colors.PRIMARY,
+    height: 100,
+    fontSize: 24,
+    alignItems: 'center',
+    width: 220,
   },
-
   botton: {
-
-    backgroundColor: "#00A0F3",
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "stretch",
-    paddingVertical: 32,
-    paddingHorizontal: 32,
-    marginTop: 32,
+    backgroundColor: colors.PRIMARY,
+    padding: 5,
+    color: 'white',
+    fontSize: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    marginTop: 10,
     marginHorizontal: 32,
-    borderRadius: 6,
+    minWidth: 250,
+    justifyContent: "center",
+    borderRadius: 10,
+    elevation: 5,
+  },
+  desmiss: {
+    flex: 1,
+    zIndex: -1,
+  },
+  note: {
+    color: colors.DARK,
+    padding: 5,
+    height: 100,
+    fontSize: 24,
+    alignItems: 'center',
+    width: 220,
 
-  }
+  },
 });
