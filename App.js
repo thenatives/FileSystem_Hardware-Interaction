@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet, Text, Image, TextInput, TouchableOpacity, View,
-  TouchableWithoutFeedback, Keyboard, StatusBar
-} from 'react-native';
+import { StyleSheet, Text, Image, TextInput, TouchableOpacity, View,
+  TouchableWithoutFeedback, Keyboard, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 //npm install @react-native-community/async-storage
 import colors from './assets/Colors';
 
 
 export default function App() {
-
+  // Declare state variables textIput and setText
   const [textInput, setText] = useState('');
+  // Declare state variables note and setNote
   const [note, setNote] = useState('');
 
-  //method to save data
+  //function component to save data using setItem method
   const save = async () => {
     if (textInput) {
       await AsyncStorage.setItem('Storage_Key', textInput);
@@ -24,24 +23,25 @@ export default function App() {
     }
   }
 
-  //method to retrieve the data
+  //function component to retrieve the data using getItem and then methods
   const retrieveData = async () => {
     await AsyncStorage.getItem('Storage_Key').then((note) => {
       setNote(note);
     });
   };
 
-  //method to remove data
+  //function component to remove data using removeItem method
   const remove = async () => {
     await AsyncStorage.removeItem("Storage_Key");
     setNote('');
   };
 
-  //method to dismiss the keyboard 
+  //function component to dismiss the keyboard using dismiss method
   const desmissKeyboard = () => {
     Keyboard.dismiss();
   };
 
+  //return a view with image, text input, bottuns, user input and components to dismiss the keyboard
   return (
     <>
       <StatusBar hidden />
@@ -89,7 +89,7 @@ export default function App() {
     </>
   );
 };
-
+//styles objects
 const styles = StyleSheet.create({
   container: {
     flex: 1,
