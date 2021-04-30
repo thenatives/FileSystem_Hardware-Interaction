@@ -14,6 +14,7 @@ export default function App() {
   // Declare state variables note and setNote
   const [note, setNote] = useState('');
 
+  //Lirs Tech Tips.https://www.youtube.com/watch?v=oXsTkvxHeYw&t=23s
   //function component to save data using setItem method
   const save = async () => {
     if (textInput) {
@@ -31,7 +32,7 @@ export default function App() {
       setNote(note);
     });
   };
-
+  //DesignIntoCode. https://www.youtube.com/watch?v=PhhyBmAIehg&t=304s
   //function component to remove data using removeItem method
   const remove = async () => {
     await AsyncStorage.removeItem("Storage_Key");
@@ -43,6 +44,7 @@ export default function App() {
     Keyboard.dismiss();
   };
 
+  //Lirs Tech Tips.https://www.youtube.com/watch?v=oXsTkvxHeYw&t=23s
   //return a view with image, text input, bottuns, user input and components to dismiss the keyboard
   return (
     <>
