@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, Image, TextInput, TouchableOpacity, View,
-  TouchableWithoutFeedback, Keyboard, StatusBar } from 'react-native';
+import {
+  StyleSheet, Text, Image, TextInput, TouchableOpacity, View,
+  TouchableWithoutFeedback, Keyboard, StatusBar
+} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 //npm install @react-native-community/async-storage
 import colors from './assets/Colors';
@@ -22,7 +24,7 @@ export default function App() {
       alert('Failed to save the note, please add some text');
     }
   }
-
+  //Lirs Tech Tips.https://www.youtube.com/watch?v=oXsTkvxHeYw&t=23s
   //function component to retrieve the data using getItem and then methods
   const retrieveData = async () => {
     await AsyncStorage.getItem('Storage_Key').then((note) => {
@@ -35,7 +37,7 @@ export default function App() {
     await AsyncStorage.removeItem("Storage_Key");
     setNote('');
   };
-
+  //Full Stack Niraj. https://www.youtube.com/watch?v=KqNBSm3HNc0&t=896s
   //function component to dismiss the keyboard using dismiss method
   const desmissKeyboard = () => {
     Keyboard.dismiss();
